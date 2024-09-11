@@ -128,8 +128,9 @@ The physical state that causes the conflict in the implausible story is:
 
 3. **Install the dependencies:**
     ```sh
+    git clone -b gita https://github.com/juletx/lm-evaluation-harness
     cd lm-evaluation-harness
-    pip install git+https://github.com/juletx/lm-evaluation-harness
+    pip install -e .
     ```
 
 ## Unified Evaluation
