@@ -129,7 +129,7 @@ The physical state that causes the conflict in the implausible story is:
 3. **Install the dependencies:**
     ```sh
     cd lm-evaluation-harness
-    pip install -r requirements.txt
+    pip install git+https://github.com/juletx/lm-evaluation-harness
     ```
 
 ## Unified Evaluation
@@ -201,72 +201,3 @@ View the results:
 |Order Consistency  |     3|0.223140495867768600|
 |Cloze Verifiability|     3|0.165217391304347820|
 |Order Verifiability|     3|0.049586776859504134|
-
-## Indepedent Evaluation
-
-The evaluation of the 3 tasks can also be done independently in the three tasks, using the scipts in the `eval` folder. Models are evaluated in all the instances in tasks 2 and 3, regardless of the performance in the previous tasks. The script also allows to evaluate instruct models.
-
-Example command to evaluate the model `Meta-Llama-3.1-8B` included in the `Llama3_1-8b.slurm` file.
-
-```sh
-path="meta-llama"
-model="Meta-Llama-3.1-8B"
-model_name=$path/$model
-
-num_fewshot=3
-
-srun python3 -m lm_eval \
-    --model hf \
-    --model_args pretrained=$model_name,dtype=bfloat16,attn_implementation=flash_attention_2 \
-    --batch_size auto \
-    --tasks gita4calamita \
-    --device cuda \
-    --output_path ../eval_results/ \
-    --num_fewshot ${num_fewshot} \
-    --log_samples
-```
-
-To evaluate instruct models include the additional chat arguments. Example command to evaluate the model `Meta-Llama-3.1-8B-Instruct` included in the `Llama3_1-8b-it.slurm` file.
-
-```sh
-path="meta-llama"
-model="Meta-Llama-3.1-8B-Instruct"
-model_name=$path/$model
-num_fewshot=3
-
-srun python3 -m lm_eval \
-    --model hf \
-    --model_args pretrained=$model_name,dtype=bfloat16,attn_implementation=flash_attention_2 \
-    --batch_size auto \
-    --tasks gita4calamita \
-    --device cuda \
-    --output_path ../eval_results/ \
-    --num_fewshot ${num_fewshot} \
-    --log_samples \
-    --apply_chat_template \
-    --fewshot_as_multiturn
-```
-
-## Independent Evaluation Results
-
-View the results:
-    - The results will be saved in the `eval_results/` directory.
-    - You can view the results in the JSON files generated.
-
-For example, these are the results for `Meta-Llama-3.1-8B` in each individual task and on average.
-
-|      Tasks      |Version|Filter|n-shot|Metric|   |Value |   |Stderr|
-|-----------------|-------|------|-----:|------|---|-----:|---|-----:|
-| - conflict_detec|      1|none  |     3|acc   |↑  |0.3866|±  |0.0316|
-|gita4calamita    |N/A    |none  |     3|acc   |↑  |0.4675|±  |0.0168|
-| - physical_state|      1|none  |     3|acc   |↑  |0.3403|±  |0.0308|
-| - story_class   |      1|none  |     3|acc   |↑  |0.6067|±  |0.0259|
-
-These are the results for `Meta-Llama-3.1-8B-Instruct` in each individual task and on average.
-
-|      Tasks      |Version|Filter|n-shot|Metric|   |Value |   |Stderr|
-|-----------------|-------|------|-----:|------|---|-----:|---|-----:|
-| - conflict_detec|      1|none  |     3|acc   |↑  |0.3824|±  |0.0316|
-|gita4calamita    |N/A    |none  |     3|acc   |↑  |0.5048|±  |0.0153|
-| - physical_state|      1|none  |     3|acc   |↑  |0.2269|±  |0.0272|
-| - story_class   |      1|none  |     3|acc   |↑  |0.7725|±  |0.0223|
