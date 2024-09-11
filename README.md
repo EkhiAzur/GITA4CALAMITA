@@ -143,6 +143,7 @@ path="meta-llama"
 model="Meta-Llama-3.1-8B"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -150,7 +151,8 @@ srun python3 unified_code.py \
     --batch_size auto:64 \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model}_description.txt \
+    --output_path ../results/${model} \
+    --include_path ${tasks_path} \
 ```
 
 To evaluate instruct models include the additional chat arguments. Example command to evaluate the model `Meta-Llama-3.1-8B-Instruct` included in the `Llama3_1-8b-it.slurm` file.
@@ -160,6 +162,7 @@ path="meta-llama"
 model="Meta-Llama-3.1-8B-Instruct"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -167,9 +170,10 @@ srun python3 unified_code.py \
     --batch_size auto:64 \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model}_description.txt \
+    --output_path ../results/${model} \
     --apply_chat_template \
-    --fewshot_as_multiturn
+    --fewshot_as_multiturn \
+    --include_path ${tasks_path} \
 ```
 
 ## Unified Evaluation Results

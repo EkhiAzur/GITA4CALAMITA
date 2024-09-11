@@ -2,3 +2,4 @@ log
 error
 harness_env
 __pycache__
+.eval_aux*

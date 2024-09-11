@@ -10,12 +10,13 @@
 #SBATCH --error=error/Meta-Llama-3.1-70B-it.err
 
 # activate virtual environment
-source harness_env/bin/activate
+source ../harness_env/bin/activate
 
 path="meta-llama"
 model="Meta-Llama-3.1-70B-Instruct"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -23,6 +24,7 @@ srun python3 unified_code.py \
     --batch_size 32 \
     --device cuda \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model} \
+    --output_path ../results/${model} \
     --apply_chat_template \
-    --fewshot_as_multiturn
+    --fewshot_as_multiturn \
+    --include_path ${tasks_path} \

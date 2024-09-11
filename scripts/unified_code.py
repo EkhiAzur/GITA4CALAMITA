@@ -110,7 +110,7 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output_path",
         "-o",
-        default=None,
+        default="../results/model",
         type=str,
         metavar="DIR|DIR/file.json",
         help="The path to the output file where the result metrics will be saved. If the path is a directory and log_samples is true, the results will be saved in the directory. Else the parent directory will be used.",
@@ -185,7 +185,7 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--include_path",
         type=str,
-        default="tasks",
+        default="../tasks",
         metavar="DIR",
         help="Additional path to include if there are external tasks to include.",
     )

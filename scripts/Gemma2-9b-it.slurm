@@ -10,12 +10,13 @@
 #SBATCH --error=error/gemma-2-9b-it.err
 
 # activate virtual environment
-source harness_env/bin/activate
+source ../harness_env/bin/activate
 
 path="google"
 model="gemma-2-9b-it"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -23,7 +24,7 @@ srun python3 unified_code.py \
     --batch_size 32 \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model}_description.txt \
-    --data_path ../data/eval_data.jsonl \
+    --output_path ../results/${model} \
     --apply_chat_template \
-    --fewshot_as_multiturn
+    --fewshot_as_multiturn \
+    --include_path ${tasks_path} \

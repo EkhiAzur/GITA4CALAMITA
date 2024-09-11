@@ -1,21 +1,22 @@
 #!/bin/bash
-#SBATCH --job-name=Meta-Llama-3.1-8B
+#SBATCH --job-name=Meta-Llama-3.1-8B-it
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=70GB
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=a100
-#SBATCH --output=log/Meta-Llama-3.1-8B.out
-#SBATCH --error=error/Meta-Llama-3.1-8B.err
+#SBATCH --output=log/Meta-Llama-3.1-8B-it.out
+#SBATCH --error=error/Meta-Llama-3.1-8B-it.err
 
 # activate virtual environment
-source harness_env/bin/activate
+source ../harness_env/bin/activate
 
 path="meta-llama"
-model="Meta-Llama-3.1-8B"
+model="Meta-Llama-3.1-8B-Instruct"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -23,6 +24,7 @@ srun python3 unified_code.py \
     --batch_size auto:64 \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model} \
-#    --apply_chat_template \
-#    --fewshot_as_multiturn
+    --output_path ../results/${model} \
+    --apply_chat_template \
+    --fewshot_as_multiturn \
+    --include_path ${tasks_path} \
