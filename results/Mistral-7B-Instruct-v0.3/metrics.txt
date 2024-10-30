@@ -1,0 +1,12 @@
+|      Metric       |n-shot|    Metric value    |
+|-------------------|-----:|-------------------:|
+|Accuracy           |     3|0.598314606741573000|
+|Consistency        |     3|0.210084033613445380|
+|Verifiability      |     3|0.092436974789915970|
+|Cloze Accuracy     |     3|0.678260869565217400|
+|Order Accuracy     |     3|0.270491803278688550|
+|Plausible Accuracy |     3|0.857142857142857100|
+|Cloze Consistency  |     3|0.408695652173913070|
+|Order Consistency  |     3|0.024793388429752067|
+|Cloze Verifiability|     3|0.191304347826086960|
+|Order Verifiability|     3|0.000000000000000000|
