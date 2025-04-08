@@ -1,21 +1,22 @@
 #!/bin/bash
-#SBATCH --job-name=Mistral-7B-Instruct-v0.3
+#SBATCH --job-name=gemma-2-9b-it
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=70GB
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=a100
-#SBATCH --output=Mistral-7B-Instruct-v0.3.out
-#SBATCH --error=Mistral-7B-Instruct-v0.3.err
+#SBATCH --output=log/gemma-2-9b-it.out
+#SBATCH --error=error/gemma-2-9b-it.err
 
 # activate virtual environment
-source ../harness_env/bin/activate
+source ../../harness_env/bin/activate
 
-path="mistralai"
-model="Mistral-7B-Instruct-v0.3"
+path="google"
+model="gemma-2-9b-it"
 model_name=$path/$model
 num_fewshot=3
+tasks_path="../tasks"
 
 srun python3 unified_code.py \
     --model hf \
@@ -23,6 +24,7 @@ srun python3 unified_code.py \
     --batch_size 32 \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
-    --output_path results/${model} \
+    --output_path ../results/${model} \
     --apply_chat_template \
-    --fewshot_as_multiturn
+    --fewshot_as_multiturn \
+    --include_path ${tasks_path} \

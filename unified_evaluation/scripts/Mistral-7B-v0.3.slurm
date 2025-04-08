@@ -10,7 +10,7 @@
 #SBATCH --error=Mistral-7B-v0.3.err
 
 # activate virtual environment
-source ../harness_env/bin/activate
+source ../../harness_env/bin/activate
 
 path="mistralai"
 model="Mistral-7B-v0.3"

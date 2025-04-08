@@ -1,19 +1,19 @@
 #!/bin/bash
-#SBATCH --job-name=gemma-2-27b-it
+#SBATCH --job-name=gemma-2-27b
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=70GB
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=a100
-#SBATCH --output=log/gemma-2-27b-it.out
-#SBATCH --error=error/gemma-2-27b-it.err
+#SBATCH --output=log/gemma-2-27b.out
+#SBATCH --error=error/gemma-2-27b.err
 
 # activate virtual environment
-source ../harness_env/bin/activate
+source ../../harness_env/bin/activate
 
 path="google"
-model="gemma-2-27b-it"
+model="gemma-2-27b"
 model_name=$path/$model
 num_fewshot=3
 tasks_path="../tasks"
@@ -25,6 +25,4 @@ srun python3 unified_code.py \
     --device cuda:0 \
     --num_fewshot ${num_fewshot} \
     --output_path ../results/${model} \
-    --apply_chat_template \
-    --fewshot_as_multiturn \
     --include_path ${tasks_path} \
