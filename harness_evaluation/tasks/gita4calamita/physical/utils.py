@@ -23,8 +23,9 @@ def doc_to_text(doc):
 def preprocess_dataset(dataset):
     
     import json
-    with open('gita_conflict_data.json', "r") as file:
-      conflict_results = json.load(file)
+    prefix = get_prefix()
+    with open(f'{prefix}_conflict_data.json', "r") as file:
+        conflict_results = json.load(file)
 
     well_classified = set(conflict_results["well_classified"])
     dataset = dataset.filter(lambda x: x["example_id"] in well_classified)

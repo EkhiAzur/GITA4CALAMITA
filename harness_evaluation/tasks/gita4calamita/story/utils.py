@@ -1,22 +1,3 @@
-def set_prefix():
-    import os
-    import warnings
-    prefix = os.getenv("GITA4CALAMITA_PREFIX", None)
-    slurm_job_id = os.getenv("SLURM_JOB_ID", None)
-    if slurm_job_id is None:
-        if prefix is None:
-            warnings.warn("GITA4CALAMITA_PREFIX not set, using default prefix, this may cause issues with parallel evaluations.")
-            prefix = "gita4calamita"
-        else:
-            prefix = prefix
-    else:
-        if prefix is not None:
-            warnings.warn("GITA4CALAMITA_PREFIX set, but SLURM_JOB_ID is also set, using both...")
-            prefix = f"{prefix}_{slurm_job_id}"
-        else:
-            prefix = f"gita4calamita_{slurm_job_id}"
-    os.environ["GITA4CALAMITA_PREFIX"] = prefix
-
 def get_prefix():
     import os
     prefix = os.getenv("GITA4CALAMITA_PREFIX")
@@ -41,7 +22,6 @@ def doc_to_text(doc):
 
 def preprocess_dataset(dataset):
     import json
-    set_prefix() # Set the prefix for the temporary files
     # Calculate number of order, cloze
     num_order = 0
     num_cloze = 0
